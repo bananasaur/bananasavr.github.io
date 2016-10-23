@@ -6,7 +6,7 @@ var BUILD_DIRECTORY = './dist'
 module.exports = {
   entry: {
     index: [
-      './src/js/index.js'
+      './src/index.js'
     ]
   },
   output: {
@@ -16,21 +16,44 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.jade$/,
-        loader: 'jade'
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        query: {
+          presets: ['es2015']
+        }
+      },
+      {
+        include: /\.json$/,
+        loader: ['json-loader']
+      },
+      {
+        test: /\.pug$/,
+        loaders: ['file-loader?name=../devindex.html', 'extract-loader', 'html-loader', 'pug-html-loader?exports=false']
+      },
+      {
+        test: /\.less$/,
+        exclude: /node_modules/,
+        loader: ExtractTextPlugin.extract('style', 'css!less')
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+        loader: 'style-loader!css-loader'
       },
+      // {
+      //   test: /\.png$/,
+      //   loader: "url-loader?limit=100000"
+      // },
+      {
+        test: /\.jpg$/,
+        loader: "file-loader"
+      }
     ]
   },
+  resolve: {
+    extensions: ['', '.js', '.json']
+  },
   plugins: [
-    new ExtractTextPlugin('[name].css'),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery'
-    })
+    new ExtractTextPlugin('[name].css', { allowChunks: true })
   ]
 };

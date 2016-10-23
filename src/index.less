@@ -1,0 +1,57 @@
+// Import
+@import '../node_modules/normalize-css/normalize.css';
+// @import 'navigation.less';
+
+// Colors
+@body-font-color: #232323;
+
+// Mixins
+.transition(@property; @duration: 1s; @style: ease; @delay: 0s) {
+  transition-property:         @property;
+  transition-duration:         @duration;
+  transition-style:            @style;
+  transition-delay:            @delay;
+
+  -webkit-transition-property: @property;
+  -webkit-transition-duration: @duration;
+  -webkit-transition-style:    @style;
+  -webkit-transition-delay:    @delay;
+
+  -moz-transition-property:    @property;
+  -moz-transition-duration:    @duration;
+  -moz-transition-style:       @style;
+  -moz-transition-delay:       @delay;
+
+  -o-transition-property:      @property;
+  -o-transition-duration:      @duration;
+  -o-transition-style:         @style;
+  -o-transition-delay:         @delay;
+}
+
+.transform(@string){
+  -webkit-transform: @string;
+  -moz-transform:    @string;
+  -ms-transform:     @string;
+  -o-transform:      @string;
+}
+
+// Global
+html, body {
+  font-size: 1em;
+  height: 100%;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  text-align: center;
+}
+
+// .image-test {
+//   display: block;
+//   position: fixed;
+//   width: 100%;
+//   height: 100%;
+//   background: url('home-bg.jpg');
+// }
