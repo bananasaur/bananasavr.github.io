@@ -8,10 +8,52 @@ html
     meta(http-equiv="x-ua-compatible" content="ie=edge")
     meta(name="description" content="")
     link(rel="stylesheet" href="dist/index.css")
-    //- link(rel="shortcut icon" href="dist/images/favicon.ico" type="image/x-icon")
+    link(rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:700|Playfair+Display:400,700|Roboto:400,700")
 
   body
-    include navigation.pug
-    div.image-test
+    nav.hidden
+      ul
+        li.active
+          a.nav-link(href="#header") Top
+          div.icon-nav
+        //- li
+        //-   a.nav-link(href="#about") Career
+        //-   div.icon-nav
+        //- li.active
+        //-   a.nav-link(href="#programming") Programming
+        //-   div.icon-nav
+        //- li
+        //-   a.nav-link(href="#contact") Contact
+        //-   div.icon-nav
 
+    header#header
+      .container
+        h1 Hello, World
+        //- p Eric Lea is a full-stack software engineer at Society6, a large-scale eCommerce site serving millions of artists worldwide.
+        p Site still under construction. Coming Soon!
+      a.icon-arrow(href="#about")
+        i.material-icons expand_more
+
+    //- section#about
+    //-   .container
+    //-     h2 About
+    //- section#programming
+    //-   .container
+    //-     h2 Programming
+    //- section#contact
+    //-   .container
+    //-     h2 Contact
+
+    footer
+      .container
+        ul
+          li
+            a.contact-link(href="https://github.com/bananasavr") GITHUB
+          li
+            a.contact-link(href="http://www.linkedin.com/in/bananasavr") LINKEDIN
+          li
+            a.contact-link(href="http://ericlea.ninja/") FREELANCE
+          li
+            a.contact-link(href="http://instagram.com/bananasaur_") INSTAGRAM
     script(src="dist/index.js")

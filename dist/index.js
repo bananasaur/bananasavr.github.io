@@ -44,48 +44,81 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(1);
+	module.exports = __webpack_require__(3);
 
 
 /***/ },
-/* 1 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	__webpack_require__(2);
-
-	__webpack_require__(3);
-
-	var _jquery = __webpack_require__(8);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	(0, _jquery2.default)(document).ready(function () {
-	  var x = 'hello world';
-	  console.log(x);
-	});
-
-/***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "../devindex.html";
-
-/***/ },
+/* 1 */,
+/* 2 */,
 /* 3 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	// removed by extract-text-webpack-plugin
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
+
+	__webpack_require__(5);
+
+	__webpack_require__(6);
+
+	$(document).ready(function () {
+	  var $navLinks = $('nav a.nav-link');
+	  var scrollOptions = [];
+
+	  function onScroll() {
+	    var scrollPos = $(window).scrollTop();
+	    var navShowPos = scrollOptions[1].min;
+
+	    if (scrollPos >= navShowPos) {
+	      $('nav').removeClass('hidden');
+	    } else {
+	      $('nav').addClass('hidden');
+	    }
+
+	    for (var i = 0; i < scrollOptions.length; i++) {
+	      if (scrollOptions[i].min - scrollOptions[i].offset <= scrollPos && scrollOptions[i].max - scrollOptions[i].offset > scrollPos) {
+	        scrollOptions[i].target.addClass('active');
+	      } else {
+	        scrollOptions[i].target.removeClass('active');
+	      }
+	    }
+	  }
+
+	  function getScrollPos() {
+	    for (var i = 0; i < $navLinks.length; i++) {
+	      var $currLink = $($navLinks[i]);
+	      var $refElement = $($currLink.attr('href'));
+
+	      scrollOptions[i] = {
+	        target: $currLink.parent(),
+	        offset: $refElement.height() / 2,
+	        min: $refElement.position().top,
+	        max: $refElement.position().top + $refElement.height()
+	      };
+	    }
+	  }
+
+	  function onResize() {
+	    sizeToWindow('#header');
+	    getScrollPos();
+	  }
+
+	  function sizeToWindow(selector) {
+	    var $clientHeight = $(window).height();
+	    $(selector).css('height', $clientHeight);
+	  }
+
+	  function init() {
+	    onResize();
+	  }
+
+	  $(document).scroll(onScroll);
+	  $(window).resize(onResize);
+
+	  init();
+	});
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10309,6 +10342,18 @@
 	return jQuery;
 	} );
 
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "../index.html";
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
 
 /***/ }
 /******/ ]);

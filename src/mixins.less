@@ -1,0 +1,29 @@
+// Mixins
+.transition(@property; @duration: 1s; @style: ease; @delay: 0s) {
+  transition-property:         @property;
+  transition-duration:         @duration;
+  transition-style:            @style;
+  transition-delay:            @delay;
+
+  -webkit-transition-property: @property;
+  -webkit-transition-duration: @duration;
+  -webkit-transition-style:    @style;
+  -webkit-transition-delay:    @delay;
+
+  -moz-transition-property:    @property;
+  -moz-transition-duration:    @duration;
+  -moz-transition-style:       @style;
+  -moz-transition-delay:       @delay;
+
+  -o-transition-property:      @property;
+  -o-transition-duration:      @duration;
+  -o-transition-style:         @style;
+  -o-transition-delay:         @delay;
+}
+
+.transform(@string){
+  -webkit-transform: @string;
+  -moz-transform:    @string;
+  -ms-transform:     @string;
+  -o-transform:      @string;
+}

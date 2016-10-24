@@ -29,7 +29,7 @@ module.exports = {
       },
       {
         test: /\.pug$/,
-        loaders: ['file-loader?name=../devindex.html', 'extract-loader', 'html-loader', 'pug-html-loader?exports=false']
+        loaders: ['file-loader?name=../index.html', 'extract-loader', 'html-loader', 'pug-html-loader?exports=false']
       },
       {
         test: /\.less$/,
@@ -46,7 +46,11 @@ module.exports = {
       // },
       {
         test: /\.jpg$/,
-        loader: "file-loader"
+        loader: "file-loader?name=[name].[ext]"
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        loader: "file-loader?name=[name].[ext]"
       }
     ]
   },
@@ -54,6 +58,11 @@ module.exports = {
     extensions: ['', '.js', '.json']
   },
   plugins: [
-    new ExtractTextPlugin('[name].css', { allowChunks: true })
+    new ExtractTextPlugin('[name].css', { allowChunks: true }),
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery',
+      $: 'jquery',
+        jquery: 'jquery'
+    })
   ]
 };
