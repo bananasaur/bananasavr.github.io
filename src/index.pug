@@ -23,17 +23,24 @@ html
         //- li.active
         //-   a.nav-link(href="#programming") Programming
         //-   div.icon-nav
-        //- li
-        //-   a.nav-link(href="#contact") Contact
-        //-   div.icon-nav
+        li
+          a.nav-link(href="#contact") Contact
+          div.icon-nav
 
     header#header
-      .container
+      .container.header-social-container
+        ul.social
+          li: a.contact-link(href="https://github.com/bananasavr") GITHUB
+          li: a.contact-link(href="http://www.linkedin.com/in/bananasavr") LINKEDIN
+          li: a.contact-link(href="http://ericlea.ninja/") FREELANCE
+          li: a.contact-link(href="http://instagram.com/bananasaur_") INSTAGRAM
+      .container.main-container
         h1 Hello, World
-        //- p Eric Lea is a full-stack software engineer at Society6, a large-scale eCommerce site serving millions of artists worldwide.
-        p Site still under construction. Coming Soon!
-      a.icon-arrow(href="#about")
+        //- p.title-caption Eric Lea is a full-stack software engineer at Society6, a large-scale eCommerce site serving millions of artists worldwide.
+        p.title-caption Site still under construction. Coming Soon!
+      a#arrow-icon
         i.material-icons expand_more
+      i#menu-icon.material-icons menu
 
     //- section#about
     //-   .container
@@ -41,19 +48,20 @@ html
     //- section#programming
     //-   .container
     //-     h2 Programming
-    //- section#contact
-    //-   .container
-    //-     h2 Contact
+    section#contact
+      .container
+        h2 Say Hello!
+        p.title-caption
+          | I love to make new friends. Feel free to reach out to me on any of my listed profiles.
+        p.title-caption
+          | For my freelance work, please visit <a class="p-link" href="http://ericlea.ninja">ericlea.ninja</a>.
+
 
     footer
       .container
-        ul
-          li
-            a.contact-link(href="https://github.com/bananasavr") GITHUB
-          li
-            a.contact-link(href="http://www.linkedin.com/in/bananasavr") LINKEDIN
-          li
-            a.contact-link(href="http://ericlea.ninja/") FREELANCE
-          li
-            a.contact-link(href="http://instagram.com/bananasaur_") INSTAGRAM
+        ul.social
+          li: a.contact-link(href="https://github.com/bananasavr") GITHUB
+          li: a.contact-link(href="http://www.linkedin.com/in/bananasavr") LINKEDIN
+          li: a.contact-link(href="http://ericlea.ninja/") FREELANCE
+          li: a.contact-link(href="http://instagram.com/bananasaur_") INSTAGRAM
     script(src="dist/index.js")

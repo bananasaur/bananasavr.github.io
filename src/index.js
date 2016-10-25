@@ -4,10 +4,11 @@ import './index.less'
 $(document).ready(function() {
   let $navLinks = $('nav a.nav-link')
   let scrollOptions = []
+  let windowHeight;
 
   function onScroll() {
     let scrollPos = $(window).scrollTop()
-    let navShowPos = scrollOptions[1].min
+    let navShowPos = scrollOptions[1].min / 1.5
 
     if (scrollPos >= navShowPos) {
       $('nav').removeClass('hidden')
@@ -45,16 +46,26 @@ $(document).ready(function() {
   }
 
   function sizeToWindow(selector) {
-    let $clientHeight = $(window).height()
-    $(selector).css('height', $clientHeight)
+    windowHeight = $(window).height()
+    $(selector).css('height', windowHeight)
   }
 
   function init() {
     onResize()
   }
 
+  $('#menu-icon').click(function() {
+    $('.header-social-container').toggleClass('active')
+    $(this).html('menu')
+
+    if ($('.header-social-container').hasClass('active')) $(this).html('close')
+  })
+
+  $('#arrow-icon').click(function() {
+    $(window).scrollTop(windowHeight)
+  })
+
   $(document).scroll(onScroll)
   $(window).resize(onResize)
-
   init()
 })
