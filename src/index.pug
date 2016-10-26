@@ -20,9 +20,9 @@ html
         //- li
         //-   a.nav-link(href="#about") Career
         //-   div.icon-nav
-        //- li.active
-        //-   a.nav-link(href="#programming") Programming
-        //-   div.icon-nav
+        li.active
+          a.nav-link(href="#programming") Programming
+          div.icon-nav
         li
           a.nav-link(href="#contact") Contact
           div.icon-nav
@@ -38,16 +38,20 @@ html
         h1 Hello, World
         //- p.title-caption Eric Lea is a full-stack software engineer at Society6, a large-scale eCommerce site serving millions of artists worldwide.
         p.title-caption Site still under construction. Coming Soon!
-      a#arrow-icon
+      a#arrow-icon.nav-link(href="#programming")
         i.material-icons expand_more
       i#menu-icon.material-icons menu
 
     //- section#about
     //-   .container
     //-     h2 About
-    //- section#programming
-    //-   .container
-    //-     h2 Programming
+    section#programming
+      .container
+        h2 Programming
+        .search-bar-container
+          i.search-icon.material-icons search
+          input#resume-search-bar(placeholder="ex: \"JavaScript\"")
+        #resume-search-results
     section#contact
       .container
         h2 Say Hello!

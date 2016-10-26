@@ -404,6 +404,69 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+.search-bar-container {
+  display: block;
+  background: transparent;
+  width: 100%;
+  display: flex;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #fff;
+}
+.search-bar-container .search-icon {
+  color: #fff;
+  font-size: 3rem;
+  padding-right: 1rem;
+}
+#resume-search-bar {
+  background: transparent;
+  width: 100%;
+  outline: none;
+  border: none;
+  color: #fff;
+  font-family: 'Playfair Display', sans-serif;
+  letter-spacing: -0.1rem;
+  font-weight: 400;
+  font-size: 2rem;
+}
+#resume-search-bar::-webkit-input-placeholder {
+  color: #fff;
+  opacity: 0.3;
+}
+#resume-search-bar:-ms-input-placeholder {
+  color: #fff;
+  opacity: 0.3;
+}
+#resume-search-bar::-ms-input-placeholder {
+  color: #fff;
+  opacity: 0.3;
+}
+#resume-search-results .resume-item {
+  box-sizing: border-box;
+  float: left;
+  width: 50%;
+  padding-top: 3rem;
+  padding-right: 1rem;
+  font-size: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+#resume-search-results .resume-item p {
+  margin: 0;
+}
+#resume-search-results .resume-item:nth-child(even) {
+  padding-left: 1rem;
+}
+@media (max-width: 768px) {
+  #resume-search-results .resume-item {
+    width: 100%;
+    padding: 2rem 0 0 0;
+  }
+  #resume-search-results .resume-item:nth-child(even) {
+    padding-left: 0;
+  }
+}
 html,
 body {
   font-size: 1em;
@@ -672,11 +735,11 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 500px;
+  min-height: 500px;
   background: #191922;
 }
 section .container {
-  padding-right: 120px;
+  padding-right: 150px;
 }
 #contact {
   padding-top: 15%;

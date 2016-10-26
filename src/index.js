@@ -1,10 +1,12 @@
 import './index.pug'
 import './index.less'
+import ResumeSearch from './ResumeSearch.js'
 
 $(document).ready(function() {
-  let $navLinks = $('nav a.nav-link')
-  let scrollOptions = []
-  let windowHeight;
+  let $navigationLinks = $('nav a.nav-link'),
+    $smoothScrollLinks = $('a.nav-link'),
+    scrollOptions = [],
+    windowHeight
 
   function onScroll() {
     let scrollPos = $(window).scrollTop()
@@ -27,8 +29,8 @@ $(document).ready(function() {
   }
 
   function getScrollPos() {
-    for (let i = 0; i < $navLinks.length; i++) {
-      let $currLink = $($navLinks[i])
+    for (let i = 0; i < $navigationLinks.length; i++) {
+      let $currLink = $($navigationLinks[i])
       let $refElement = $($currLink.attr('href'))
 
       scrollOptions[i] = {
@@ -61,11 +63,33 @@ $(document).ready(function() {
     if ($('.header-social-container').hasClass('active')) $(this).html('close')
   })
 
-  $('#arrow-icon').click(function() {
-    $(window).scrollTop(windowHeight)
+  $smoothScrollLinks.click(function(e) {
+    e.preventDefault()
+    $('document').off('scroll')
+
+    let $link = $(this),
+      target = this.hash,
+      $target = $($link.attr('href'))
+
+    $('html body').stop().animate({
+      'scrollTop': $target.offset().top
+    }, {
+      duration: 700,
+      specialEasing: {
+        scrollTop: 'swing'
+      },
+      complete: function() {
+        window.location.hash = target
+        $(document).on('scroll', onScroll)
+      }
+    })
   })
 
   $(document).scroll(onScroll)
   $(window).resize(onResize)
+  ResumeSearch({
+    inputSelector: '#resume-search-bar',
+    outputSelector: '#resume-search-results'
+  })
   init()
 })
