@@ -1,22 +1,36 @@
-import resume from './resume.js'
-import _ from 'lodash'
-
-function Resume(opt) {
-  const options = {
-    'inputSelector': _.get(opt, 'inputSelector'),
-    'outputSelector': _.get(opt, 'outputSelector')
+function Resume(options, resume) {
+  // Declarations
+  let self = this
+  const _options = {
+    'inputSelector': _.get(options, 'inputSelector'),
+    'outputSelector': _.get(options, 'outputSelector')
   }
 
+  // State Management
+  let _state = {
+    'viewAll': false
+  }
+
+  self.setState = function(object) {
+    _state = _.assign(_state, object)
+  }
+
+  self.getState = function(string) {
+    return _state[string]
+  }
+
+  // Class Functions
   function bind(inputSelector) {
     let $inputSelector = $(inputSelector)
 
     $inputSelector.on('keyup', function() {
+      self.setState({ 'viewAll': false })
       if ($(this).val() == '') {
-        $(options.outputSelector).html('')
+        $(_options.outputSelector).html('')
         return
       }
       let query = $(this).val()
-      $(options.outputSelector).html(getTemplate(search(query)))
+      $(_options.outputSelector).html(getTemplate(search(query)))
     })
   }
 
@@ -51,7 +65,18 @@ function Resume(opt) {
     return html
   }
 
-  bind(options.inputSelector)
+  self.viewAllClicked = function() {
+    $(_options.inputSelector).val('')
+    self.setState({ 'viewAll': !self.getState('viewAll') })
+
+    if (self.getState('viewAll')) {
+      $(_options.outputSelector).html(getTemplate(resume))
+    } else {
+      $(_options.outputSelector).html('')
+    }
+  }
+
+  bind(_options.inputSelector)
 }
 
 export default Resume

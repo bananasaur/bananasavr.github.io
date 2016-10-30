@@ -59,13 +59,27 @@
 
 	__webpack_require__(6);
 
+	var _lodash = __webpack_require__(16);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
 	var _ResumeSearch = __webpack_require__(13);
 
 	var _ResumeSearch2 = _interopRequireDefault(_ResumeSearch);
 
+	var _resume = __webpack_require__(14);
+
+	var _resume2 = _interopRequireDefault(_resume);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	$(document).ready(function () {
+	  var resumeOptions = {
+	    inputSelector: '#resume-search-bar',
+	    outputSelector: '#resume-search-results'
+	  };
+	  var Resume = new _ResumeSearch2.default(resumeOptions, _resume2.default);
+
 	  var $navigationLinks = $('nav a.nav-link'),
 	      $smoothScrollLinks = $('a.nav-link'),
 	      scrollOptions = [],
@@ -147,12 +161,12 @@
 	    });
 	  });
 
+	  $('#view-all').click(function (e) {
+	    Resume.viewAllClicked($(this));
+	  });
+
 	  $(document).scroll(onScroll);
 	  $(window).resize(onResize);
-	  (0, _ResumeSearch2.default)({
-	    inputSelector: '#resume-search-bar',
-	    outputSelector: '#resume-search-results'
-	  });
 	  init();
 	});
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
@@ -10410,43 +10424,49 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-
-	var _resume = __webpack_require__(14);
-
-	var _resume2 = _interopRequireDefault(_resume);
-
-	var _lodash = __webpack_require__(16);
-
-	var _lodash2 = _interopRequireDefault(_lodash);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function Resume(opt) {
-	  var options = {
-	    'inputSelector': _lodash2.default.get(opt, 'inputSelector'),
-	    'outputSelector': _lodash2.default.get(opt, 'outputSelector')
+	function Resume(options, resume) {
+	  // Declarations
+	  var self = this;
+	  var _options = {
+	    'inputSelector': _.get(options, 'inputSelector'),
+	    'outputSelector': _.get(options, 'outputSelector')
 	  };
 
+	  // State Management
+	  var _state = {
+	    'viewAll': false
+	  };
+
+	  self.setState = function (object) {
+	    _state = _.assign(_state, object);
+	  };
+
+	  self.getState = function (string) {
+	    return _state[string];
+	  };
+
+	  // Class Functions
 	  function bind(inputSelector) {
 	    var $inputSelector = $(inputSelector);
 
 	    $inputSelector.on('keyup', function () {
+	      self.setState({ 'viewAll': false });
 	      if ($(this).val() == '') {
-	        $(options.outputSelector).html('');
+	        $(_options.outputSelector).html('');
 	        return;
 	      }
 	      var query = $(this).val();
-	      $(options.outputSelector).html(getTemplate(search(query)));
+	      $(_options.outputSelector).html(getTemplate(search(query)));
 	    });
 	  }
 
 	  function search(query) {
-	    var searchable = _resume2.default;
+	    var searchable = resume;
 
-	    var result = _lodash2.default.filter(searchable, function (o) {
+	    var result = _.filter(searchable, function (o) {
 	      // return _.startsWith(_.toLower(o.name), _.toLower(query))
-	      var q = _lodash2.default.toLower(query);
-	      var t = _lodash2.default.toLower(o.name);
+	      var q = _.toLower(query);
+	      var t = _.toLower(o.name);
 	      return new RegExp(q).test(t);
 	    });
 
@@ -10455,8 +10475,8 @@
 
 	  function getTemplate(arr) {
 	    var html = '';
-	    _lodash2.default.forEach(arr, function (obj) {
-	      var start = _lodash2.default.template('<div class="resume-item"><p><%= name %></p><p class="rating-container">');
+	    _.forEach(arr, function (obj) {
+	      var start = _.template('<div class="resume-item"><p><%= name %></p><p class="rating-container">');
 	      var end = '</p></div>';
 	      var stars = '';
 	      for (var i = 1; i <= 5; i++) {
@@ -10471,7 +10491,18 @@
 	    return html;
 	  }
 
-	  bind(options.inputSelector);
+	  self.viewAllClicked = function () {
+	    $(_options.inputSelector).val('');
+	    self.setState({ 'viewAll': !self.getState('viewAll') });
+
+	    if (self.getState('viewAll')) {
+	      $(_options.outputSelector).html(getTemplate(resume));
+	    } else {
+	      $(_options.outputSelector).html('');
+	    }
+	  };
+
+	  bind(_options.inputSelector);
 	}
 
 	exports.default = Resume;

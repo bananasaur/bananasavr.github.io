@@ -1,8 +1,16 @@
 import './index.pug'
 import './index.less'
+import _ from 'lodash'
 import ResumeSearch from './ResumeSearch.js'
+import resume from './resume.js'
 
 $(document).ready(function() {
+  let resumeOptions = {
+    inputSelector: '#resume-search-bar',
+    outputSelector: '#resume-search-results'
+  }
+  let Resume = new ResumeSearch(resumeOptions, resume)
+
   let $navigationLinks = $('nav a.nav-link'),
     $smoothScrollLinks = $('a.nav-link'),
     scrollOptions = [],
@@ -85,11 +93,11 @@ $(document).ready(function() {
     })
   })
 
+  $('#view-all').click(function(e) {
+    Resume.viewAllClicked($(this))
+  })
+
   $(document).scroll(onScroll)
   $(window).resize(onResize)
-  ResumeSearch({
-    inputSelector: '#resume-search-bar',
-    outputSelector: '#resume-search-results'
-  })
   init()
 })

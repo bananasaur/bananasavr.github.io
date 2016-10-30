@@ -405,7 +405,6 @@ table {
     border-spacing: 0;
 }
 .search-bar-container {
-  display: block;
   background: transparent;
   width: 100%;
   display: flex;
@@ -416,6 +415,23 @@ table {
   color: #fff;
   font-size: 3rem;
   padding-right: 1rem;
+}
+.search-view-all {
+  display: block;
+  padding-top: 0.8rem;
+  width: 100%;
+  text-align: right;
+}
+.search-view-all #view-all {
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: -1px;
+  font-weight: 400;
+  font-size: 1.2rem;
+  color: #848491;
+  cursor: pointer;
+}
+.search-view-all #view-all.active {
+  color: #fff;
 }
 #resume-search-bar {
   background: transparent;
@@ -524,7 +540,7 @@ nav {
   justify-content: flex-end;
   align-items: center;
   position: fixed;
-  width: 200px;
+  width: 120px;
   right: 0;
   transition-property: 'opacity';
   transition-duration: 0.6s;

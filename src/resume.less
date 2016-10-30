@@ -1,5 +1,4 @@
 .search-bar-container {
-  display: block;
   background: transparent;
   width: 100%;
   display: flex;
@@ -10,6 +9,26 @@
     color: @white;
     font-size: 3rem;
     padding-right: 1rem;
+  }
+}
+
+.search-view-all {
+  display: block;
+  padding-top: 0.8rem;
+  width: 100%;
+  text-align: right;
+
+  #view-all {
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: -1px;
+    font-weight: 400;
+    font-size: 1.2rem;
+    color: @med-gray;
+    cursor: pointer;
+
+    &.active {
+      color: @white;
+    }
   }
 }
 
