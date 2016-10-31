@@ -1,44 +1,45 @@
-function Resume(options, resume) {
-  // Declarations
-  let self = this
-  const _options = {
-    'inputSelector': _.get(options, 'inputSelector'),
-    'outputSelector': _.get(options, 'outputSelector')
+// Assumes lodash and jquery are loaded
+class Resume {
+  constructor(options, resume) {
+    this._options = {
+      'inputSelector': _.get(options, 'inputSelector'),
+      'outputSelector': _.get(options, 'outputSelector')
+    }
+    this._state = {
+      'viewAll': false
+    }
+    this._resume = resume
+    this.bind()
   }
 
-  // State Management
-  let _state = {
-    'viewAll': false
+  get state() {
+    return this._state
   }
 
-  self.setState = function(object) {
-    _state = _.assign(_state, object)
+  set state(val) {
+    this._state = _.assign(this._state, val)
   }
 
-  self.getState = function(string) {
-    return _state[string]
-  }
+  bind() {
+    let $inputSelector = $(this._options.inputSelector)
+    let $outputSelector = $(this._options.outputSelector)
 
-  // Class Functions
-  function bind(inputSelector) {
-    let $inputSelector = $(inputSelector)
-
-    $inputSelector.on('keyup', function() {
-      self.setState({ 'viewAll': false })
-      if ($(this).val() == '') {
-        $(_options.outputSelector).html('')
+    $inputSelector.on('keyup', () => {
+      this.state = { viewAll: false }
+      if ($inputSelector.val() == '') {
+        $outputSelector.html('')
         return
       }
-      let query = $(this).val()
-      $(_options.outputSelector).html(getTemplate(search(query)))
+      let query = $inputSelector.val()
+      let html = this.getTemplate(this.search(query))
+      $outputSelector.html(html)
     })
   }
 
-  function search(query) {
-    const searchable = resume
+  search(query) {
+    const searchable = this._resume
 
     let result = _.filter(searchable, (o) => {
-      // return _.startsWith(_.toLower(o.name), _.toLower(query))
       let q = _.toLower(query)
       let t = _.toLower(o.name)
       return (new RegExp(q)).test(t)
@@ -47,10 +48,10 @@ function Resume(options, resume) {
     return result
   }
 
-  function getTemplate(arr) {
+  getTemplate(arr) {
     let html = ''
     _.forEach(arr, (obj) => {
-      let start =  _.template('<div class="resume-item"><p><%= name %></p><p class="rating-container">')
+      let start =  '<div class="resume-item"><p>' + obj.name + '</p><p class="rating-container">'
       let end = '</p></div>'
       let stars = ''
       for (let i = 1; i <= 5; i++) {
@@ -60,23 +61,23 @@ function Resume(options, resume) {
           stars += '<i class="rating material-icons">star_border</i>'
         }
       }
-      html += start(obj) + stars + end
+      html += start + stars + end
     })
     return html
   }
 
-  self.viewAllClicked = function() {
-    $(_options.inputSelector).val('')
-    self.setState({ 'viewAll': !self.getState('viewAll') })
+  viewAllClicked() {
+    let $inputSelector = $(this._options.inputSelector)
+    let $outputSelector = $(this._options.outputSelector)
+    $inputSelector.val('')
+    this.state = { 'viewAll': !this.state['viewAll'] }
 
-    if (self.getState('viewAll')) {
-      $(_options.outputSelector).html(getTemplate(resume))
+    if (this.state['viewAll']) {
+      $outputSelector.html(this.getTemplate(this._resume))
     } else {
-      $(_options.outputSelector).html('')
+      $outputSelector.html('')
     }
   }
-
-  bind(_options.inputSelector)
 }
 
 export default Resume

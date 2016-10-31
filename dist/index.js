@@ -10424,86 +10424,104 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	function Resume(options, resume) {
-	  // Declarations
-	  var self = this;
-	  var _options = {
-	    'inputSelector': _.get(options, 'inputSelector'),
-	    'outputSelector': _.get(options, 'outputSelector')
-	  };
 
-	  // State Management
-	  var _state = {
-	    'viewAll': false
-	  };
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	  self.setState = function (object) {
-	    _state = _.assign(_state, object);
-	  };
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	  self.getState = function (string) {
-	    return _state[string];
-	  };
+	// Assumes lodash and jquery are loaded
+	var Resume = function () {
+	  function Resume(options, resume) {
+	    _classCallCheck(this, Resume);
 
-	  // Class Functions
-	  function bind(inputSelector) {
-	    var $inputSelector = $(inputSelector);
-
-	    $inputSelector.on('keyup', function () {
-	      self.setState({ 'viewAll': false });
-	      if ($(this).val() == '') {
-	        $(_options.outputSelector).html('');
-	        return;
-	      }
-	      var query = $(this).val();
-	      $(_options.outputSelector).html(getTemplate(search(query)));
-	    });
+	    this._options = {
+	      'inputSelector': _.get(options, 'inputSelector'),
+	      'outputSelector': _.get(options, 'outputSelector')
+	    };
+	    this._state = {
+	      'viewAll': false
+	    };
+	    this._resume = resume;
+	    this.bind();
 	  }
 
-	  function search(query) {
-	    var searchable = resume;
+	  _createClass(Resume, [{
+	    key: 'bind',
+	    value: function bind() {
+	      var _this = this;
 
-	    var result = _.filter(searchable, function (o) {
-	      // return _.startsWith(_.toLower(o.name), _.toLower(query))
-	      var q = _.toLower(query);
-	      var t = _.toLower(o.name);
-	      return new RegExp(q).test(t);
-	    });
+	      var $inputSelector = $(this._options.inputSelector);
+	      var $outputSelector = $(this._options.outputSelector);
 
-	    return result;
-	  }
-
-	  function getTemplate(arr) {
-	    var html = '';
-	    _.forEach(arr, function (obj) {
-	      var start = _.template('<div class="resume-item"><p><%= name %></p><p class="rating-container">');
-	      var end = '</p></div>';
-	      var stars = '';
-	      for (var i = 1; i <= 5; i++) {
-	        if (i <= obj.rating) {
-	          stars += '<i class="rating material-icons">star</i>';
-	        } else {
-	          stars += '<i class="rating material-icons">star_border</i>';
+	      $inputSelector.on('keyup', function () {
+	        _this.state = { viewAll: false };
+	        if ($inputSelector.val() == '') {
+	          $outputSelector.html('');
+	          return;
 	        }
-	      }
-	      html += start(obj) + stars + end;
-	    });
-	    return html;
-	  }
-
-	  self.viewAllClicked = function () {
-	    $(_options.inputSelector).val('');
-	    self.setState({ 'viewAll': !self.getState('viewAll') });
-
-	    if (self.getState('viewAll')) {
-	      $(_options.outputSelector).html(getTemplate(resume));
-	    } else {
-	      $(_options.outputSelector).html('');
+	        var query = $inputSelector.val();
+	        var html = _this.getTemplate(_this.search(query));
+	        $outputSelector.html(html);
+	      });
 	    }
-	  };
+	  }, {
+	    key: 'search',
+	    value: function search(query) {
+	      var searchable = this._resume;
 
-	  bind(_options.inputSelector);
-	}
+	      var result = _.filter(searchable, function (o) {
+	        var q = _.toLower(query);
+	        var t = _.toLower(o.name);
+	        return new RegExp(q).test(t);
+	      });
+
+	      return result;
+	    }
+	  }, {
+	    key: 'getTemplate',
+	    value: function getTemplate(arr) {
+	      var html = '';
+	      _.forEach(arr, function (obj) {
+	        var start = '<div class="resume-item"><p>' + obj.name + '</p><p class="rating-container">';
+	        var end = '</p></div>';
+	        var stars = '';
+	        for (var i = 1; i <= 5; i++) {
+	          if (i <= obj.rating) {
+	            stars += '<i class="rating material-icons">star</i>';
+	          } else {
+	            stars += '<i class="rating material-icons">star_border</i>';
+	          }
+	        }
+	        html += start + stars + end;
+	      });
+	      return html;
+	    }
+	  }, {
+	    key: 'viewAllClicked',
+	    value: function viewAllClicked() {
+	      var $inputSelector = $(this._options.inputSelector);
+	      var $outputSelector = $(this._options.outputSelector);
+	      $inputSelector.val('');
+	      this.state = { 'viewAll': !this.state['viewAll'] };
+
+	      if (this.state['viewAll']) {
+	        $outputSelector.html(this.getTemplate(this._resume));
+	      } else {
+	        $outputSelector.html('');
+	      }
+	    }
+	  }, {
+	    key: 'state',
+	    get: function get() {
+	      return this._state;
+	    },
+	    set: function set(val) {
+	      this._state = _.assign(this._state, val);
+	    }
+	  }]);
+
+	  return Resume;
+	}();
 
 	exports.default = Resume;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
